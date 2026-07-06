@@ -17,8 +17,9 @@ matplotlib>=3.8
 seaborn>=0.13
 umap-learn>=0.5
 
-# Notebooks
-jupyter>=1.0
+# Notebooks (ipykernel is enough for VS Code; nbconvert exports the slide deck.
+# The full `jupyter` metapackage is intentionally omitted: its ipywidgets assets
+# exceed Windows' 260-char path limit unless long-path support is enabled.)
 ipykernel>=6.29
 nbconvert>=7.0
 

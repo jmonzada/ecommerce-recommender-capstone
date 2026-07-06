@@ -4,7 +4,7 @@ negative_sampling:
   hard_share: 0.5
   ratio: 4
   seed: 42
-svd_k: 128
+svd_k: 256
 windows:
   feature_window:
   - '2017-01-01'

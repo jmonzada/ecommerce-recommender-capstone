@@ -1,6 +1,6 @@
 # Step 4 model configuration (config-driven runs; notebook 03 reads this).
 candidate_generation:
-  svd_components: [16, 32, 64, 128]   # swept on validation users
+  svd_components: [16, 32, 64, 128, 256]   # swept on validation users
   hybrid_weights: [0.25, 0.5, 0.75]   # CF share of the z-normalised blend
   n_candidates: 50                    # Stage-1 list length fed to the ranker
   val_share: 0.3                      # repeat buyers held aside for tuning w / k
@@ -10,7 +10,7 @@ negative_sampling:
   seed: 42
 rankers:
   logistic_regression:
-    C: [0.01, 0.1, 1.0]
+    C: [0.01, 0.1, 1.0, 10.0]
     class_weight: [null, balanced]
   random_forest:
     n_estimators: [300]

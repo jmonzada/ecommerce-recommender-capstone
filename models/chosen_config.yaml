@@ -1,0 +1,17 @@
+hybrid_w: 0.25
+n_candidates: 50
+negative_sampling:
+  hard_share: 0.5
+  ratio: 4
+  seed: 42
+svd_k: 128
+windows:
+  feature_window:
+  - '2017-01-01'
+  - '2018-03-01'
+  holdout:
+  - '2018-06-01'
+  - '2018-09-01'
+  label_window:
+  - '2018-03-01'
+  - '2018-06-01'

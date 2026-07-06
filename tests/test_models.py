@@ -77,6 +77,24 @@ def test_bootstrap_ci_contains_mean():
     assert lo <= 0.5 <= hi
 
 
+def test_leave_last_order_split_keeps_oneshot_customers():
+    from src.evaluate import leave_last_order_split
+    from src.features import load_clean_items, load_clean_orders, load_windows
+
+    w = load_windows()
+    delivered, _ = load_clean_orders()
+    items, _ = load_clean_items()
+    train, held = leave_last_order_split(delivered, items, w["feature_window"][0],
+                                         w["holdout"][1])
+    # one-shot customers' purchases must stay in training (the earlier bug
+    # dropped them, starving every Stage-1 model)
+    assert len(train) > 80_000
+    assert held["customer_unique_id"].nunique() > 2_000
+    assert set(held["customer_unique_id"]) & set(train["customer_unique_id"]) == set(
+        held["customer_unique_id"]
+    )  # every eval user keeps at least one training order
+
+
 def test_router_routes():
     im = InteractionMatrix(PAIRS, PRODUCTS)
     cf = ItemItemCF().fit(im)

@@ -24,10 +24,12 @@ def leave_last_order_split(delivered: pd.DataFrame, items: pd.DataFrame,
     ][["order_id", "customer_unique_id", "order_purchase_timestamp"]]
     n_orders = o.groupby("customer_unique_id")["order_id"].nunique()
     repeat = n_orders[n_orders >= 2].index
-    o = o[o["customer_unique_id"].isin(repeat)]
-    last = (o.sort_values("order_purchase_timestamp")
+    last = (o[o["customer_unique_id"].isin(repeat)]
+            .sort_values("order_purchase_timestamp")
             .drop_duplicates("customer_unique_id", keep="last"))
     held_ids = set(last["order_id"])
+    # training keeps EVERY customer's remaining purchases - one-shot customers'
+    # interactions are what give popularity/CF/SVD their signal
     lines = items.merge(o, on="order_id")[
         ["customer_unique_id", "product_id", "order_id"]
     ].drop_duplicates()

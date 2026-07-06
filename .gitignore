@@ -12,6 +12,7 @@ __pycache__/
 
 # experiment tracking
 mlruns/
+mlruns.db
 
 # large raw file (see data/README.md for download; compact centroid lookup is committed instead)
 data/raw/olist_geolocation_dataset.csv

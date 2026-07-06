@@ -1,6 +1,6 @@
 {
   "tau": 0.272046,
-  "lambda": 0.4,
+  "lambda_sweep_choice": 0.4,
   "region_audit_5": [
     {
       "group": "Center-West",
@@ -154,20 +154,20 @@
     }
   },
   "exploration_mitigation": {
-    "hit@10": 0.0028820010875475802,
-    "ndcg@10": 0.001476092019371051,
-    "gini": 0.9849066195460958,
-    "longtail_share": 0.02675910821098423,
-    "coverage": 0.09441291614822009,
-    "small_seller_share": 0.0011528004350190321
+    "hit@10": 0.004023926046764546,
+    "ndcg@10": 0.001989545212378096,
+    "gini": 0.9851974008104608,
+    "longtail_share": 0.0267047308319739,
+    "coverage": 0.09432187187035294,
+    "small_seller_share": 0.0012887438825448614
   },
   "reserved_slot_injection": {
-    "hit@10": 0.012615551930396955,
-    "ndcg@10": 0.006245510245652069,
-    "gini": 0.9921286470663535,
-    "longtail_share": 0.021022294725394235,
-    "coverage": 0.10260690115626232,
-    "small_seller_share": 0.0010657966286025014
+    "hit@10": 0.012506797172376292,
+    "ndcg@10": 0.006209441781001901,
+    "gini": 0.9920927792184183,
+    "longtail_share": 0.021277868406742794,
+    "coverage": 0.10239446450790568,
+    "small_seller_share": 0.001054921152800435
   },
   "final_list_audit": [
     {
@@ -177,7 +177,10 @@
       "mean_pop_pct_before": 0.9922286401226028,
       "n_customers_after": 1059,
       "hit@10_after": 0.012275731822474031,
-      "mean_pop_pct_after": 0.9745988169860711
+      "mean_pop_pct_after": 0.9739055937610054,
+      "delta_hit": -0.0009442870632672333,
+      "delta_lo": -0.0028328611898017,
+      "delta_hi": 0.0
     },
     {
       "region": "North",
@@ -186,7 +189,10 @@
       "mean_pop_pct_before": 0.9892783881116405,
       "n_customers_after": 300,
       "hit@10_after": 0.01,
-      "mean_pop_pct_after": 0.9459907842958737
+      "mean_pop_pct_after": 0.9476700555370096,
+      "delta_hit": -0.0033333333333333335,
+      "delta_lo": -0.01,
+      "delta_hi": 0.0
     },
     {
       "region": "Northeast",
@@ -194,8 +200,11 @@
       "hit@10_before": 0.030864197530864196,
       "mean_pop_pct_before": 0.9961415079105488,
       "n_customers_after": 1620,
-      "hit@10_after": 0.027777777777777776,
-      "mean_pop_pct_after": 0.9859634891839023
+      "hit@10_after": 0.027160493827160494,
+      "mean_pop_pct_after": 0.9856930577052121,
+      "delta_hit": -0.003703703703703704,
+      "delta_lo": -0.006790123456790123,
+      "delta_hi": -0.0012345679012345679
     },
     {
       "region": "South",
@@ -203,8 +212,11 @@
       "hit@10_before": 0.01032204789430223,
       "mean_pop_pct_before": 0.9927170730023996,
       "n_customers_after": 2422,
-      "hit@10_after": 0.0053674649050371595,
-      "mean_pop_pct_after": 0.9864166792866451
+      "hit@10_after": 0.005780346820809248,
+      "mean_pop_pct_after": 0.9860332439171433,
+      "delta_hit": -0.004541701073492981,
+      "delta_lo": -0.007844756399669695,
+      "delta_hi": -0.002064409578860446
     },
     {
       "region": "Southeast",
@@ -212,8 +224,11 @@
       "hit@10_before": 0.013549926861190238,
       "mean_pop_pct_before": 0.9931653679529595,
       "n_customers_after": 12989,
-      "hit@10_after": 0.012164138886750327,
-      "mean_pop_pct_after": 0.9907109206934901
+      "hit@10_after": 0.012010162445145892,
+      "mean_pop_pct_after": 0.9906364061845259,
+      "delta_hit": -0.0015397644160443451,
+      "delta_lo": -0.0023885595503887907,
+      "delta_hi": -0.0005389175456155208
     }
   ]
 }

@@ -28,6 +28,19 @@ RAW_TABLES = {
 
 GEO_CENTROIDS_PATH = PROCESSED_DIR / "geo_zip_centroids.csv"
 
+# IBGE macro-regions. Used for EDA rollups and as the socioeconomic proxy
+# grouping in the fairness audit (see reports/final_report.md).
+BR_STATE_REGION = {
+    "AC": "North", "AP": "North", "AM": "North", "PA": "North",
+    "RO": "North", "RR": "North", "TO": "North",
+    "AL": "Northeast", "BA": "Northeast", "CE": "Northeast",
+    "MA": "Northeast", "PB": "Northeast", "PE": "Northeast",
+    "PI": "Northeast", "RN": "Northeast", "SE": "Northeast",
+    "DF": "Center-West", "GO": "Center-West", "MT": "Center-West", "MS": "Center-West",
+    "ES": "Southeast", "MG": "Southeast", "RJ": "Southeast", "SP": "Southeast",
+    "PR": "South", "RS": "South", "SC": "South",
+}
+
 
 def load_table(name: str) -> pd.DataFrame:
     """Load one raw Olist table by short name (see RAW_TABLES)."""

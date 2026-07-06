@@ -2,7 +2,17 @@
 
 import pandas as pd
 
-from src.data import GEO_CENTROIDS_PATH, RAW_DIR, RAW_TABLES, load_table
+from src.data import BR_STATE_REGION, GEO_CENTROIDS_PATH, RAW_DIR, RAW_TABLES, load_table
+
+
+def test_state_region_map_complete():
+    # 27 Brazilian federative units across the 5 IBGE macro-regions
+    assert len(BR_STATE_REGION) == 27
+    assert set(BR_STATE_REGION.values()) == {
+        "North", "Northeast", "Center-West", "Southeast", "South",
+    }
+    customers = load_table("customers")
+    assert customers["customer_state"].map(BR_STATE_REGION).notna().all()
 
 
 def test_raw_tables_present():

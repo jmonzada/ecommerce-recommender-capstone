@@ -1,0 +1,18 @@
+# Three-window temporal evaluation scheme (leakage control).
+# Dates pinned from the monthly order-volume curve in notebooks/01_data_overview.ipynb:
+#   - 2016 pilot period excluded (329 orders total, with a gap in Nov 2016)
+#   - post-August-2018 tail excluded (volume collapses: Sep 16 orders, Oct 4)
+# Rules: ALL aggregate features and similarity matrices are computed from the
+# feature window only, for training AND holdout pairs alike. Stage-1 evaluation
+# artefacts exclude every held-out order. Ranker CV groups by customer_unique_id.
+data_start: "2017-01-01"
+data_end: "2018-08-31"
+feature_window:
+  start: "2017-01-01"
+  end: "2018-02-28"
+label_window:
+  start: "2018-03-01"
+  end: "2018-05-31"
+holdout:
+  start: "2018-06-01"
+  end: "2018-08-31"

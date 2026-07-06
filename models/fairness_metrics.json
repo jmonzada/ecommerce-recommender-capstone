@@ -1,0 +1,219 @@
+{
+  "tau": 0.272046,
+  "lambda": 0.4,
+  "region_audit_5": [
+    {
+      "group": "Center-West",
+      "n": 52950,
+      "n_pos": 30,
+      "base_rate": 0.0005665722379603399,
+      "selection_rate": 0.024551463644948063,
+      "tpr": 0.1,
+      "tpr_lo": 0.0,
+      "tpr_hi": 0.23333333333333334,
+      "auc": 0.6786375661375662
+    },
+    {
+      "group": "North",
+      "n": 15000,
+      "n_pos": 10,
+      "base_rate": 0.0006666666666666666,
+      "selection_rate": 0.020533333333333334,
+      "tpr": NaN,
+      "tpr_lo": NaN,
+      "tpr_hi": NaN,
+      "auc": NaN
+    },
+    {
+      "group": "Northeast",
+      "n": 81000,
+      "n_pos": 72,
+      "base_rate": 0.0008888888888888889,
+      "selection_rate": 0.024876543209876544,
+      "tpr": 0.2222222222222222,
+      "tpr_lo": 0.1388888888888889,
+      "tpr_hi": 0.3194444444444444,
+      "auc": 0.8246474575479987
+    },
+    {
+      "group": "South",
+      "n": 121100,
+      "n_pos": 64,
+      "base_rate": 0.0005284888521882742,
+      "selection_rate": 0.011742361684558217,
+      "tpr": 0.03125,
+      "tpr_lo": 0.0,
+      "tpr_hi": 0.078125,
+      "auc": 0.7094738987780494
+    },
+    {
+      "group": "Southeast",
+      "n": 649450,
+      "n_pos": 426,
+      "base_rate": 0.0006559396412348911,
+      "selection_rate": 0.007323119562706906,
+      "tpr": 0.028169014084507043,
+      "tpr_lo": 0.014084507042253521,
+      "tpr_hi": 0.04460093896713615,
+      "auc": 0.7136632142888557
+    }
+  ],
+  "dp_difference": 0.01755342364716964,
+  "di_ratio": 0.29437850351328004,
+  "tpr_gap": 0.19405320813771518,
+  "threshold_optimizer": [
+    {
+      "group": "Center-West",
+      "n": 52950,
+      "tpr_after": 0.1,
+      "selection_after": 0.03609065155807365,
+      "tpr_before": 0.1,
+      "selection_before": 0.024551463644948063
+    },
+    {
+      "group": "North",
+      "n": 15000,
+      "tpr_after": null,
+      "selection_after": 0.014533333333333334,
+      "tpr_before": null,
+      "selection_before": 0.020533333333333334
+    },
+    {
+      "group": "Northeast",
+      "n": 81000,
+      "tpr_after": 0.2916666666666667,
+      "selection_after": 0.032518518518518516,
+      "tpr_before": 0.2222222222222222,
+      "selection_before": 0.024876543209876544
+    },
+    {
+      "group": "South",
+      "n": 121100,
+      "tpr_after": 0.03125,
+      "selection_after": 0.01092485549132948,
+      "tpr_before": 0.03125,
+      "selection_before": 0.011742361684558217
+    },
+    {
+      "group": "Southeast",
+      "n": 649450,
+      "tpr_after": 0.03990610328638498,
+      "selection_after": 0.01007775810301024,
+      "tpr_before": 0.028169014084507043,
+      "selection_before": 0.007323119562706906
+    }
+  ],
+  "exposure_sweep": {
+    "0.0": {
+      "hit@10": 0.014627514953779229,
+      "ndcg@10": 0.006850866649791635,
+      "gini": 0.9985752067238964,
+      "longtail_share": 0.010092441544317564,
+      "coverage": 0.07062001153227519,
+      "small_seller_share": 0.00024469820554649265
+    },
+    "0.02": {
+      "hit@10": 0.014627514953779229,
+      "ndcg@10": 0.006845430594215066,
+      "gini": 0.9985712002475903,
+      "longtail_share": 0.010304513322457857,
+      "coverage": 0.07080210008800947,
+      "small_seller_share": 0.00022838499184339316
+    },
+    "0.05": {
+      "hit@10": 0.014573137574768896,
+      "ndcg@10": 0.00682742934929227,
+      "gini": 0.998568438719684,
+      "longtail_share": 0.010609026644915715,
+      "coverage": 0.07092349245849898,
+      "small_seller_share": 0.00020663404023926046
+    },
+    "0.1": {
+      "hit@10": 0.014573137574768896,
+      "ndcg@10": 0.006822639123199052,
+      "gini": 0.9985762107358349,
+      "longtail_share": 0.01101141924959217,
+      "coverage": 0.07055931534703044,
+      "small_seller_share": 0.00019032082653616095
+    },
+    "0.2": {
+      "hit@10": 0.014573137574768896,
+      "ndcg@10": 0.006795481410917353,
+      "gini": 0.9985742558499993,
+      "longtail_share": 0.011653072321914084,
+      "coverage": 0.07062001153227519,
+      "small_seller_share": 0.00012506797172376292
+    },
+    "0.4": {
+      "hit@10": 0.014410005437737902,
+      "ndcg@10": 0.006730722913430756,
+      "gini": 0.9985714028982577,
+      "longtail_share": 0.01279499728113105,
+      "coverage": 0.07068070771751996,
+      "small_seller_share": 7.069059271343121e-05
+    }
+  },
+  "exploration_mitigation": {
+    "hit@10": 0.0028820010875475802,
+    "ndcg@10": 0.001476092019371051,
+    "gini": 0.9849066195460958,
+    "longtail_share": 0.02675910821098423,
+    "coverage": 0.09441291614822009,
+    "small_seller_share": 0.0011528004350190321
+  },
+  "reserved_slot_injection": {
+    "hit@10": 0.012615551930396955,
+    "ndcg@10": 0.006245510245652069,
+    "gini": 0.9921286470663535,
+    "longtail_share": 0.021022294725394235,
+    "coverage": 0.10260690115626232,
+    "small_seller_share": 0.0010657966286025014
+  },
+  "final_list_audit": [
+    {
+      "region": "Center-West",
+      "n_customers_before": 1059,
+      "hit@10_before": 0.013220018885741265,
+      "mean_pop_pct_before": 0.9922286401226028,
+      "n_customers_after": 1059,
+      "hit@10_after": 0.012275731822474031,
+      "mean_pop_pct_after": 0.9745988169860711
+    },
+    {
+      "region": "North",
+      "n_customers_before": 300,
+      "hit@10_before": 0.013333333333333334,
+      "mean_pop_pct_before": 0.9892783881116405,
+      "n_customers_after": 300,
+      "hit@10_after": 0.01,
+      "mean_pop_pct_after": 0.9459907842958737
+    },
+    {
+      "region": "Northeast",
+      "n_customers_before": 1620,
+      "hit@10_before": 0.030864197530864196,
+      "mean_pop_pct_before": 0.9961415079105488,
+      "n_customers_after": 1620,
+      "hit@10_after": 0.027777777777777776,
+      "mean_pop_pct_after": 0.9859634891839023
+    },
+    {
+      "region": "South",
+      "n_customers_before": 2422,
+      "hit@10_before": 0.01032204789430223,
+      "mean_pop_pct_before": 0.9927170730023996,
+      "n_customers_after": 2422,
+      "hit@10_after": 0.0053674649050371595,
+      "mean_pop_pct_after": 0.9864166792866451
+    },
+    {
+      "region": "Southeast",
+      "n_customers_before": 12989,
+      "hit@10_before": 0.013549926861190238,
+      "mean_pop_pct_before": 0.9931653679529595,
+      "n_customers_after": 12989,
+      "hit@10_after": 0.012164138886750327,
+      "mean_pop_pct_after": 0.9907109206934901
+    }
+  ]
+}

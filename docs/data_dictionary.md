@@ -55,7 +55,7 @@ The Olist dataset is a relational collection of anonymized records from a Brazil
 
 | Column | Type | Missing % | Description | Units / allowed values |
 |---|---|---|---|---|
-| review_id | object | 0.0 | Identifier of the review submitted by the customer. **Not unique** *(verified: 814 duplicated values, and 547 orders carry more than one review — deduplicate before joining)*. | Hash string |
+| review_id | object | 0.0 | Identifier of the review submitted by the customer. **Not unique** *(verified: 789 review_id values appear more than once, 814 surplus duplicate rows, and 547 orders carry more than one review — deduplicate before joining)*. | Hash string |
 | order_id | object | 0.0 | Identifier of the reviewed order, linking to the orders table. | Hash string |
 | review_score | int64 | 0.0 | Customer satisfaction rating for the order. | Integer 1–5 |
 | review_comment_title | object | 88.3 | Optional free-text title of the customer's review, in Portuguese. | Free text |
@@ -108,4 +108,4 @@ The Olist dataset is a relational collection of anonymized records from a Brazil
 
 ---
 
-**Note:** All timestamp and date columns are recorded in local Brazilian time.
+**Note:** All timestamp and date columns are recorded in local Brazilian time. The Type column shows raw pandas dtypes as loaded — timestamp columns therefore read `object`; they are semantically datetime and parsed with `pd.to_datetime` on load (see the semantic-type breakdown in `notebooks/01_data_overview.ipynb`).

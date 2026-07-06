@@ -1,0 +1,26 @@
+# environments
+.venv/
+venv/
+.env
+
+# python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+
+# experiment tracking
+mlruns/
+
+# large raw file (see data/README.md for download; compact centroid lookup is committed instead)
+data/raw/olist_geolocation_dataset.csv
+
+# large derived data (regenerate from notebooks/src)
+data/processed/*
+!data/processed/.gitkeep
+!data/processed/geo_zip_centroids.csv
+
+# OS junk
+Thumbs.db
+.DS_Store

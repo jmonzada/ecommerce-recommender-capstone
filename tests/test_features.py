@@ -12,8 +12,18 @@ from src.features import (
     load_clean_products,
     load_clean_reviews,
     load_windows,
+    reviews_before,
     sample_negatives,
 )
+
+
+def test_reviews_before_filters_post_cutoff_creations():
+    reviews, _ = load_clean_reviews()
+    assert str(reviews["review_creation_date"].dtype).startswith("datetime")
+    cutoff = pd.Timestamp("2018-03-01")
+    filtered = reviews_before(reviews, cutoff)
+    assert filtered["review_creation_date"].max() < cutoff
+    assert len(filtered) < len(reviews)
 
 
 def test_haversine_sp_to_rio():

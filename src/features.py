@@ -74,10 +74,22 @@ def load_clean_orders() -> tuple[pd.DataFrame, dict]:
 def load_clean_reviews() -> tuple[pd.DataFrame, dict]:
     reviews = load_table("order_reviews")
     counts = {"reviews_raw": len(reviews)}
-    reviews["review_answer_timestamp"] = pd.to_datetime(reviews["review_answer_timestamp"])
+    for c in ("review_creation_date", "review_answer_timestamp"):
+        reviews[c] = pd.to_datetime(reviews[c])
     reviews = reviews.sort_values("review_answer_timestamp").drop_duplicates("order_id", keep="last")
     counts["dropped_duplicate_reviews"] = counts["reviews_raw"] - len(reviews)
     return reviews, counts
+
+
+def reviews_before(reviews: pd.DataFrame, cutoff: pd.Timestamp) -> pd.DataFrame:
+    """Reviews created strictly before `cutoff`.
+
+    A feature-window ORDER can carry a review written weeks later (6.7% of
+    reviews on feature-window orders were created after the window cutoff), so
+    review-based aggregates must filter on review_creation_date, not just join
+    by order_id. Creation date is the conservative bound - the survey exists
+    then even if the customer answers later."""
+    return reviews[reviews["review_creation_date"] < cutoff]
 
 
 def load_clean_items() -> tuple[pd.DataFrame, dict]:
@@ -149,7 +161,9 @@ def customer_features(delivered, items, payments, reviews, products, window) -> 
         inter[["order_id", "customer_unique_id"]].drop_duplicates().set_index("order_id")
     ).groupby("customer_unique_id")["payment_installments"].mean()
 
-    rev = reviews.merge(inter[["order_id", "customer_unique_id"]].drop_duplicates(), on="order_id")
+    rev = reviews_before(reviews, end).merge(
+        inter[["order_id", "customer_unique_id"]].drop_duplicates(), on="order_id"
+    )
     feats["avg_review_given"] = rev.groupby("customer_unique_id")["review_score"].mean()
 
     feats["preferred_category"] = (
@@ -174,7 +188,9 @@ def product_features(delivered, items, reviews, products, window) -> pd.DataFram
     closest measurable analogue."""
     start, end = window
     inter = interactions(delivered, items, start, end)
-    rev = reviews.merge(inter[["order_id", "product_id"]].drop_duplicates(), on="order_id")
+    rev = reviews_before(reviews, end).merge(
+        inter[["order_id", "product_id"]].drop_duplicates(), on="order_id"
+    )
 
     sold = inter.groupby("product_id").agg(
         popularity=("order_id", "nunique"),
@@ -213,7 +229,9 @@ def seller_features(delivered, items, reviews, window) -> pd.DataFrame:
     """Per seller, from feature-window sales: volume, review mean, geography."""
     start, end = window
     inter = interactions(delivered, items, start, end)
-    rev = reviews.merge(inter[["order_id", "seller_id"]].drop_duplicates(), on="order_id")
+    rev = reviews_before(reviews, end).merge(
+        inter[["order_id", "seller_id"]].drop_duplicates(), on="order_id"
+    )
     feats = inter.groupby("seller_id").agg(seller_order_count=("order_id", "nunique"))
     feats["seller_review_mean"] = rev.groupby("seller_id")["review_score"].mean()
     feats["seller_review_mean"] = feats["seller_review_mean"].fillna(rev["review_score"].mean())
@@ -244,7 +262,34 @@ def customer_geo() -> pd.DataFrame:
     return modal[["customer_state", "customer_zip_code_prefix", "region"]]
 
 
-def pair_features(pairs, cust_f, cust_geo_f, prod_f, seller_f, centroids) -> pd.DataFrame:
+def cold_fill_stats(delivered, items, reviews, centroids, window) -> dict:
+    """Cold-start fill constants pinned to feature-window statistics.
+
+    Computing fills from the scoring batch itself would make a pair's features
+    depend on which batch it is scored with, and would let validation rows
+    shape the fills applied to training rows. These are fixed once per window:
+    max recency = window length, review fills = window review mean, distance
+    fill = median customer->seller distance over actual window purchases."""
+    start, end = window
+    inter = interactions(delivered, items, start, end)
+    rev = reviews_before(reviews, end).merge(inter[["order_id"]].drop_duplicates(), on="order_id")
+    sellers = load_table("sellers")[["seller_id", "seller_zip_code_prefix"]]
+    d = inter.merge(sellers, on="seller_id")
+    dist = haversine_km(
+        d["customer_zip_code_prefix"].map(centroids["lat"]),
+        d["customer_zip_code_prefix"].map(centroids["lng"]),
+        d["seller_zip_code_prefix"].map(centroids["lat"]),
+        d["seller_zip_code_prefix"].map(centroids["lng"]),
+    )
+    return {
+        "recency_days": float((end - start).days),
+        "avg_review_given": float(rev["review_score"].mean()),
+        "seller_review_mean": float(rev["review_score"].mean()),
+        "distance_km": float(np.nanmedian(dist)),
+    }
+
+
+def pair_features(pairs, cust_f, cust_geo_f, prod_f, seller_f, centroids, fill_stats) -> pd.DataFrame:
     """Feature matrix for (customer_unique_id, product_id) pairs.
 
     Cold customers (no feature-window history) get has_history=0 with neutral
@@ -281,11 +326,11 @@ def pair_features(pairs, cust_f, cust_geo_f, prod_f, seller_f, centroids) -> pd.
     ]
     fills = {c: 0.0 for c in numeric}
     fills.update({
-        "c_recency_days": float(df["c_recency_days"].max() or 0),  # cold = maximally stale
-        "c_avg_review_given": float(df["c_avg_review_given"].mean() or 0),  # 0 isn't a valid score
-        "distance_km": float(df["distance_km"].median() or 0),
+        "c_recency_days": fill_stats["recency_days"],          # cold = maximally stale
+        "c_avg_review_given": fill_stats["avg_review_given"],  # 0 isn't a valid score
+        "distance_km": fill_stats["distance_km"],
         "price_delta": 0.0,
-        "s_seller_review_mean": float(df["s_seller_review_mean"].mean() or 0),
+        "s_seller_review_mean": fill_stats["seller_review_mean"],
     })
     out = df[["customer_unique_id", "product_id"]].copy()
     for c in numeric:

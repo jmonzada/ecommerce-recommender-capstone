@@ -42,6 +42,15 @@ uvicorn app.main:app --port 8000    # then open http://localhost:8000/
 
 ![demo](docs/media/demo.gif)
 
+## Presentations
+
+Two decks summarise the project (Step 6): a [technical deck](presentations/technical_deck.slides.html) for peers (reveal.js export of `notebooks/05_technical_slides.ipynb`; open in a browser — reveal.js loads from a CDN, so it needs internet) and a [business deck](presentations/business_deck.pptx) for a non-technical audience. Regenerate with:
+
+```bash
+jupyter nbconvert --to slides notebooks/05_technical_slides.ipynb --output-dir presentations --output technical_deck --embed-images
+python presentations/build_business_deck.py
+```
+
 ## Repository layout
 
 ```

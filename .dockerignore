@@ -4,3 +4,6 @@ data/raw/olist_geolocation_dataset.csv
 .venv/
 mlruns.db
 .git/
+
+# secrets never enter the build context
+.env

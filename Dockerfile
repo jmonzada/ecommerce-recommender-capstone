@@ -12,6 +12,7 @@ COPY configs/windows.yaml configs/windows.yaml
 COPY models/chosen_config.yaml models/chosen_config.yaml
 COPY models/ranker_xgboost.joblib models/ranker_xgboost.joblib
 COPY models/feature_columns.json models/feature_columns.json
+COPY models/explanations_cache.json models/explanations_cache.json
 COPY data/raw/ data/raw/
 COPY data/processed/geo_zip_centroids.csv data/processed/geo_zip_centroids.csv
 

@@ -1,0 +1,164 @@
+{
+ "004288347e5e88a27ded2bb23747066c:66a0a6e02b7f543e5b021ce361f267d4": {
+  "explanation": "A crowd-pleaser in the cool_stuff category you already love, this well-reviewed pick is popular with fellow shoppers and ships from a seller close to you in the Southeast.",
+  "model": "claude-opus-4-8",
+  "route": "two_stage",
+  "signals": [
+   "p_popularity=32 (+1.65)",
+   "category_match=1 (-0.79)",
+   "distance_km=328.4 (+0.43)",
+   "region_Southeast=1 (+0.35)",
+   "p_review_mean=4.516 (+0.28)"
+  ],
+  "context": {
+   "category": "cool_stuff",
+   "price_brl": 119.99,
+   "popularity": 32,
+   "review_mean": 4.52
+  }
+ },
+ "004288347e5e88a27ded2bb23747066c:6e1b14d3cbb5fb3a2c00351007127dfd": {
+  "explanation": "Because you keep coming back for cool_stuff, we picked this popular, well-reviewed pick that shoppers like you often buy—and it ships from a seller close to you.",
+  "model": "claude-opus-4-8",
+  "route": "two_stage",
+  "signals": [
+   "p_popularity=16 (+1.74)",
+   "cf_signal=0.25 (+0.58)",
+   "s_seller_order_count=924 (-0.46)",
+   "p_product_weight_g=1625 (-0.36)",
+   "distance_km=328.4 (+0.36)"
+  ],
+  "context": {
+   "category": "cool_stuff",
+   "price_brl": 229.99,
+   "popularity": 16,
+   "review_mean": 4.56
+  }
+ },
+ "004288347e5e88a27ded2bb23747066c:db272366bfa82333abe0da87ae7735d3": {
+  "explanation": "Because you're a returning shopper and this well-rated health & beauty pick has earned solid reviews from others, we thought it might be a nice fit for you.",
+  "model": "claude-opus-4-8",
+  "route": "two_stage",
+  "signals": [
+   "p_product_weight_g=330 (+0.39)",
+   "c_frequency=2 (+0.32)",
+   "c_monetary=317.9 (-0.24)",
+   "c_recency_days=45 (-0.19)",
+   "p_review_mean=4.144 (+0.17)"
+  ],
+  "context": {
+   "category": "health_beauty",
+   "price_brl": 79.9,
+   "popularity": 0,
+   "review_mean": 4.14
+  }
+ },
+ "6358b15ef7fa9b1210f1a5735cabd3d9:aca2eb7d00ea1a7b8ebd4e68314663af": {
+  "explanation": "You're seeing this well-photographed home décor piece because it comes from a trusted, high-volume seller with strong buyer ratings.",
+  "model": "claude-opus-4-8",
+  "route": "regional_popularity",
+  "signals": [
+   "p_popularity=221 (-0.82)",
+   "p_product_photos_qty=6 (+0.35)",
+   "s_seller_order_count=493 (+0.32)",
+   "s_seller_review_mean=4.262 (+0.26)",
+   "p_category_satisfaction_rate=0.7479 (-0.18)"
+  ],
+  "context": {
+   "category": "furniture_decor",
+   "price_brl": 69.9,
+   "popularity": 221,
+   "review_mean": 4.15
+  }
+ },
+ "6358b15ef7fa9b1210f1a5735cabd3d9:53b36df67ebb7c41585e8d54d6772e08": {
+  "explanation": "This watch comes from a top-selling seller, sits in a popular price tier, and offers shipping that's affordable relative to its price—a solid pick for you.",
+  "model": "claude-opus-4-8",
+  "route": "regional_popularity",
+  "signals": [
+   "p_popularity=66 (-0.67)",
+   "s_seller_order_count=567 (+0.46)",
+   "p_price_band=4 (+0.22)",
+   "region_Southeast=1 (-0.14)",
+   "p_freight_ratio=0.1118 (+0.14)"
+  ],
+  "context": {
+   "category": "watches_gifts",
+   "price_brl": 154.45,
+   "popularity": 66,
+   "review_mean": 3.89
+  }
+ },
+ "6358b15ef7fa9b1210f1a5735cabd3d9:3dd2a17168ec895c781a9191c1e95ad7": {
+  "explanation": "You're seeing this well-priced computer accessory because it's sold by a highly rated seller and offers great value in its price range.",
+  "model": "claude-opus-4-8",
+  "route": "regional_popularity",
+  "signals": [
+   "p_popularity=86 (-1.12)",
+   "p_median_price_w=149.9 (+0.15)",
+   "p_price_band=4 (+0.15)",
+   "s_seller_review_mean=4.164 (+0.13)",
+   "distance_km=2114 (-0.12)"
+  ],
+  "context": {
+   "category": "computers_accessories",
+   "price_brl": 149.9,
+   "popularity": 86,
+   "review_mean": 4.21
+  }
+ },
+ "first-time-visitor:bb50f2e236e5eea0100680137654686c": {
+  "explanation": "With clear photos and a detailed description behind it, this well-reviewed health & beauty pick has already been chosen by dozens of shoppers, so we thought you'd want a closer look.",
+  "model": "claude-opus-4-8",
+  "route": "global_popularity",
+  "signals": [
+   "p_product_photos_qty=6 (+0.78)",
+   "p_price_band=4 (+0.66)",
+   "p_product_description_lenght=2644 (+0.54)",
+   "p_median_price_w=325 (+0.41)",
+   "region_Northeast=0 (+0.29)"
+  ],
+  "context": {
+   "category": "health_beauty",
+   "price_brl": 325.0,
+   "popularity": 69,
+   "review_mean": 4.2
+  }
+ },
+ "first-time-visitor:aca2eb7d00ea1a7b8ebd4e68314663af": {
+  "explanation": "From a top-selling, highly rated seller, this affordable furniture and decor piece comes with plenty of photos so you can see exactly what you're getting.",
+  "model": "claude-opus-4-8",
+  "route": "global_popularity",
+  "signals": [
+   "p_popularity=221 (-0.72)",
+   "s_seller_order_count=493 (+0.40)",
+   "p_product_photos_qty=6 (+0.28)",
+   "s_seller_review_mean=4.262 (+0.20)",
+   "p_price_band=1 (-0.15)"
+  ],
+  "context": {
+   "category": "furniture_decor",
+   "price_brl": 69.9,
+   "popularity": 221,
+   "review_mean": 4.15
+  }
+ },
+ "first-time-visitor:3dd2a17168ec895c781a9191c1e95ad7": {
+  "explanation": "This computer accessory is well-priced at R$149.90, comes from a highly rated seller, and has earned solid reviews from dozens of shoppers—a reliable pick to start with.",
+  "model": "claude-opus-4-8",
+  "route": "global_popularity",
+  "signals": [
+   "p_popularity=86 (-0.94)",
+   "p_median_price_w=149.9 (+0.35)",
+   "s_seller_review_mean=4.164 (+0.17)",
+   "region_Southeast=0 (+0.17)",
+   "p_price_band=4 (+0.14)"
+  ],
+  "context": {
+   "category": "computers_accessories",
+   "price_brl": 149.9,
+   "popularity": 86,
+   "review_mean": 4.21
+  }
+ }
+}

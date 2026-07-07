@@ -46,6 +46,33 @@ def test_recommend_unknown_customer_falls_back(client):
     assert len(body["items"]) == 3
 
 
+def test_recommend_explain_serves_from_cache(client, warm_customer, tmp_path, monkeypatch):
+    from src import llm_explain
+
+    base = client.get(f"/recommend/{warm_customer}?k=5").json()
+    monkeypatch.setattr(llm_explain, "CACHE_PATH", tmp_path / "cache.json")
+    monkeypatch.setattr(llm_explain, "have_api_key", lambda: False)  # never call the API
+    llm_explain.save_cache({
+        llm_explain.cache_key(warm_customer, it["product_id"]):
+            {"explanation": f"cached blurb {i}"}
+        for i, it in enumerate(base["items"][:2])
+    })
+
+    body = client.get(f"/recommend/{warm_customer}?k=5&explain=true").json()
+    assert body["items"][0]["explanation"] == "cached blurb 0"
+    assert body["items"][0]["explanation_source"] == "cache"
+    assert body["items"][1]["explanation"] == "cached blurb 1"
+    # third item is uncached and live calls are disabled -> explicit null
+    assert body["items"][2]["explanation"] is None
+    # beyond EXPLAIN_TOP_N the field is absent entirely
+    assert "explanation" not in body["items"][llm_explain.EXPLAIN_TOP_N]
+
+
+def test_recommend_without_explain_has_no_explanation_field(client, warm_customer):
+    body = client.get(f"/recommend/{warm_customer}?k=3").json()
+    assert all("explanation" not in it for it in body["items"])
+
+
 def test_k_validation(client):
     assert client.get("/recommend/x?k=0").status_code == 422
     assert client.get("/recommend/x?k=99").status_code == 422

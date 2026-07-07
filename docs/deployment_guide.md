@@ -14,7 +14,7 @@ Startup rebuilds the serving artefacts from the committed data and
 - `GET /health` — readiness probe (`artifacts_loaded: true` once serving)
 - `GET /recommend/{customer_unique_id}?k=10` — the two-stage pipeline; unknown
   customers get the cold-start route automatically (`route` names which path
-  served the request: `hybrid_only` / `regional_popularity` / `global_popularity`)
+  served the request: `two_stage` / `regional_popularity` / `global_popularity`)
 
 Demo: ![demo](media/demo.gif)
 
@@ -43,7 +43,7 @@ serves identically to the local run — no external services needed.
 Signals to watch in production, in order of alarm value:
 
 1. **Routing-share drift** — the share of requests served by each route
-   (`hybrid_only` vs `regional_popularity` vs `global_popularity`). A shift
+   (`two_stage` vs `regional_popularity` vs `global_popularity`). A shift
    means the customer mix changed; the 98.5% cold share is the baseline.
 2. **Score distribution drift** — weekly PSI on the ranker's score histogram
    per route. Drift indicates the feature pipeline or demand changed.

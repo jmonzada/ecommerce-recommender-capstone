@@ -2,13 +2,16 @@
 FROM python:3.11-slim
 
 WORKDIR /srv
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements-serve.txt .
+RUN pip install --no-cache-dir -r requirements-serve.txt
 
 COPY src/ src/
-COPY app/ app/
-COPY configs/ configs/
-COPY models/ models/
+COPY app/main.py app/main.py
+COPY configs/windows.yaml configs/windows.yaml
+# only the artefacts the serving path loads (see src/pipeline.py + app/main.py)
+COPY models/chosen_config.yaml models/chosen_config.yaml
+COPY models/ranker_xgboost.joblib models/ranker_xgboost.joblib
+COPY models/feature_columns.json models/feature_columns.json
 COPY data/raw/ data/raw/
 COPY data/processed/geo_zip_centroids.csv data/processed/geo_zip_centroids.csv
 

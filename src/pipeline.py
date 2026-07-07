@@ -135,6 +135,8 @@ def recommend_two_stage(art: dict, ranker, feature_columns: list[str],
     })
     x = ranker_matrix(pairs, art, columns=feature_columns)
     pairs["score"] = ranker.predict_proba(x)[:, 1]
+    if route == "hybrid_only":
+        route = "two_stage"  # the re-rank below is the second stage
     top = pairs.sort_values("score", ascending=False).head(k).copy()
     prod = art["prod_fw"]
     top["category"] = top["product_id"].map(prod["category"])

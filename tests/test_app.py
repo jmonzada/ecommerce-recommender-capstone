@@ -30,8 +30,7 @@ def test_recommend_known_customer(client, warm_customer):
     r = client.get(f"/recommend/{warm_customer}?k=5")
     assert r.status_code == 200
     body = r.json()
-    assert body["route"] in {"two_stage", "hybrid_only", "regional_popularity",
-                             "global_popularity"}
+    assert body["route"] in {"two_stage", "regional_popularity", "global_popularity"}
     assert len(body["items"]) == 5
     scores = [it["score"] for it in body["items"]]
     assert scores == sorted(scores, reverse=True)

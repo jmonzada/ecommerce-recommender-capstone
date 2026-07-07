@@ -1,0 +1,6 @@
+# keep local and fresh-clone image builds byte-identical
+data/raw/olist_geolocation_dataset.csv
+**/__pycache__/
+.venv/
+mlruns.db
+.git/

@@ -92,11 +92,13 @@ class ItemItemCF:
 
 
 class ContentBased:
-    """Cosine similarity in product attribute space (category one-hot +
-    standardised numeric attributes). Reaches cold products by construction."""
+    """Cosine similarity in product CONTENT space: category one-hot plus the
+    standardised static attributes. Deliberately excludes interaction-derived
+    features (price, review means) so the model is window-independent and
+    reaches products with zero sales history - that cold-start reach is its
+    role in the lineup."""
 
     NUMERIC = [
-        "median_price_w", "freight_ratio", "review_mean", "category_satisfaction_rate",
         "product_photos_qty", "product_name_lenght", "product_description_lenght",
         "product_weight_g", "product_length_cm", "product_height_cm", "product_width_cm",
     ]

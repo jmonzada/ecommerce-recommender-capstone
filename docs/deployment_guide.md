@@ -15,8 +15,16 @@ Startup rebuilds the serving artefacts from the committed data and
 - `GET /recommend/{customer_unique_id}?k=10` — the two-stage pipeline; unknown
   customers get the cold-start route automatically (`route` names which path
   served the request: `two_stage` / `regional_popularity` / `global_popularity`)
+- `GET /recommend/{customer_unique_id}?k=10&explain=true` — adds LLM-generated
+  "why you're seeing this" blurbs to the top 3 items (Step 9). Cache-first from
+  the committed `models/explanations_cache.json`; a live Claude call happens
+  only for uncached pairs when `ANTHROPIC_API_KEY` is set (`.env`, never
+  committed) and the `anthropic` package is installed. Without either, uncached
+  items return `explanation: null` — an LLM outage can never fail a
+  recommendation request.
 
-Demo: ![demo](media/demo.gif)
+Demo: ![demo](media/demo.gif) — combined video incl. the explain flow:
+[`media/demo.mp4`](media/demo.mp4)
 
 ## Docker
 
@@ -26,7 +34,11 @@ docker run -p 8000:8000 olist-recommender
 ```
 
 The image bakes in the raw data, configs, and trained artefacts, so a container
-serves identically to the local run — no external services needed.
+serves identically to the local run — no external services needed. The
+explanation cache is baked in too, so `explain=true` works offline; the
+`anthropic` SDK and API key are deliberately NOT in the image (no secrets in
+images) — pass `-e ANTHROPIC_API_KEY=...` and extend the image with
+`pip install anthropic` only if live generation is wanted in a container.
 
 ## Reproducibility & experiment tracking
 

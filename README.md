@@ -36,7 +36,9 @@ End-to-end on 18,390 holdout customers: the two-stage pipeline (hybrid candidate
 uvicorn app.main:app --port 8000    # then open http://localhost:8000/
 ```
 
-`GET /recommend/{customer_unique_id}?k=10` serves the evaluated pipeline with cold-start routing; `docs/deployment_guide.md` covers Docker, monitoring, and rollback.
+`GET /recommend/{customer_unique_id}?k=10` serves the evaluated pipeline with cold-start routing; add `&explain=true` for LLM-generated "why you're seeing this" blurbs on the top items (grounded in the ranker's SHAP attributions, served from a committed cache — live generation only when `ANTHROPIC_API_KEY` is configured). `docs/deployment_guide.md` covers Docker, monitoring, and rollback.
+
+**Demo video** (recommendation routes + LLM explanations): [`docs/media/demo.mp4`](docs/media/demo.mp4)
 
 ![demo](docs/media/demo.gif)
 
@@ -46,7 +48,7 @@ uvicorn app.main:app --port 8000    # then open http://localhost:8000/
 configs/          # YAML experiment configs
 data/raw/         # Olist source CSVs (see data/README.md for licence + download)
 data/processed/   # derived artefacts (regenerated; committed: zip-prefix centroid lookup)
-docs/             # data dictionary, deployment guide, demo media
+docs/             # data dictionary, deployment guide, LLM prompts & outputs (docs/llm/), demo media
 notebooks/        # 01 data overview · 02 EDA & features · 03 modeling · 04 explainability & fairness · 05 technical slides
 src/              # reusable pipeline code (data, features, models, evaluation, fairness, recommend)
 models/           # saved model artefacts + per-run metrics
@@ -71,7 +73,7 @@ uvicorn app.main:app --reload
 
 ## AI assistance
 
-Generative AI (Anthropic's Claude) was used in this project as a development assistant — code scaffolding, review, and documentation drafting — and as a project feature (LLM-generated recommendation explanations and an LLM-drafted data dictionary, both documented in the final report's *Use of Generative AI* section). All analysis decisions, results, and final content were verified and are owned by the author.
+Generative AI (Anthropic's Claude) was used in this project as a development assistant — code scaffolding, review, and documentation drafting — and as a project feature (LLM-generated recommendation explanations and an LLM-drafted data dictionary, both documented in the final report's *Use of Generative AI* section, with prompts, raw outputs, and generated examples committed under `docs/llm/`). All analysis decisions, results, and final content were verified and are owned by the author.
 
 ## Licence
 

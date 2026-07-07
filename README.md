@@ -18,15 +18,27 @@ Olist is a marketplace that connects small Brazilian sellers to large storefront
 
 ## Results
 
-*(Populated as modelling lands — see `reports/final_report.md` for the full analysis.)*
+Candidate generation (leave-last-order-out over 1,949 repeat buyers; full analysis with CIs in `reports/final_report.md`):
 
 | Model | HitRate@10 | NDCG@10 | Coverage |
 |-------|-----------|---------|----------|
-| Popularity baseline | – | – | – |
-| Item-item CF | – | – | – |
-| Content-based | – | – | – |
-| Truncated SVD | – | – | – |
-| Hybrid | – | – | – |
+| Popularity baseline | 0.031 | 0.014 | 0.000 |
+| Item-item CF | 0.055 | 0.041 | 0.042 |
+| Content-based | 0.171 | 0.141 | 0.377 |
+| Truncated SVD (k=256) | 0.054 | 0.047 | 0.019 |
+| **Hybrid (w=0.25)** | **0.203** | **0.151** | 0.371 |
+
+End-to-end on 18,390 holdout customers: the two-stage pipeline (hybrid candidates + XGBoost re-rank) beats Stage-1 order by a paired per-customer difference of **+0.0024 [+0.0008, +0.0041]** HitRate@10 — small but real (+20% relative). The fairness audit, mitigation trade-offs, and their honest caveats live in the report's Step 5.
+
+## Serving
+
+```bash
+uvicorn app.main:app --port 8000    # then open http://localhost:8000/
+```
+
+`GET /recommend/{customer_unique_id}?k=10` serves the evaluated pipeline with cold-start routing; `docs/deployment_guide.md` covers Docker, monitoring, and rollback.
+
+![demo](docs/media/demo.gif)
 
 ## Repository layout
 

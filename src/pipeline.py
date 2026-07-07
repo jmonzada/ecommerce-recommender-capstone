@@ -120,3 +120,24 @@ def ranker_matrix(pairs: pd.DataFrame, art: dict,
     if columns is not None:
         num = num.reindex(columns=columns, fill_value=0.0)
     return num
+
+
+def recommend_two_stage(art: dict, ranker, feature_columns: list[str],
+                        customer_id: str, k: int = 10) -> tuple[pd.DataFrame, str]:
+    """The final Step 4 pipeline for one customer: routed Stage-1 candidates,
+    re-ranked by the trained ranker. Returns (top-k frame with scores and
+    product context, route label)."""
+    region = art["geo_region"].get(customer_id)
+    cands, route = art["router"].recommend(customer_id, region=region, k=None)
+    pairs = pd.DataFrame({
+        "customer_unique_id": customer_id,
+        "product_id": art["im_fw"].product_ids[cands],
+    })
+    x = ranker_matrix(pairs, art, columns=feature_columns)
+    pairs["score"] = ranker.predict_proba(x)[:, 1]
+    top = pairs.sort_values("score", ascending=False).head(k).copy()
+    prod = art["prod_fw"]
+    top["category"] = top["product_id"].map(prod["category"])
+    top["price_brl"] = top["product_id"].map(prod["median_price_w"]).round(2)
+    top["popularity"] = top["product_id"].map(prod["popularity"]).astype(int)
+    return top.reset_index(drop=True), route

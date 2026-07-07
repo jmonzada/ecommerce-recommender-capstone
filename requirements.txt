@@ -38,5 +38,9 @@ ruff>=0.4
 anthropic>=0.25
 python-dotenv>=1.0
 
+# Demo media generation (app/make_demo_video.py; the GIF script needs Pillow only)
+imageio>=2.34
+imageio-ffmpeg>=0.4
+
 # Presentations
 python-pptx>=0.6.23

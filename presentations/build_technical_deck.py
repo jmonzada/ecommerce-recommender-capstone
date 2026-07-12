@@ -1,8 +1,8 @@
 """Build presentations/technical_deck.pptx - a native, editable PowerPoint of
 the Step 6 technical deck.
 
-Parses the markdown cells of notebooks/05_technical_slides.ipynb (the same
-source as the reveal.js export) into headings, bullets, numbered lists, tables,
+Parses the markdown cells of notebooks/05_technical_slides.ipynb into headings,
+bullets, numbered lists, tables,
 and figures, and renders each as real PowerPoint objects. Dash-free by design;
 numbers come straight from the notebook. Regenerate:
 

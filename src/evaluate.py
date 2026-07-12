@@ -1,10 +1,10 @@
 """Ranking evaluation for the capstone (Step 4).
 
 Implements the CI-aware protocol from the evaluation plan: leave-last-order-out
-splitting for repeat buyers, HitRate/Recall@K + MRR + NDCG@10, catalogue
+splitting for repeat buyers, HitRate/Recall@K + MRR + NDCG@10, catalog
 coverage and long-tail exposure, per-method reachability ceilings, and
 user-resampled bootstrap confidence intervals. Winners are only claimed when
-intervals separate - hit rates over a 33k-product catalogue are tiny numbers.
+intervals separate - hit rates over a 33k-product catalog are tiny numbers.
 """
 
 import numpy as np
@@ -68,7 +68,7 @@ def bootstrap_ci(values: np.ndarray, n_boot: int = 1000, seed: int = SEED,
 
 def coverage_and_longtail(all_top10: list[np.ndarray], popularity: np.ndarray,
                           n_items: int) -> dict:
-    """Catalogue coverage of top-10 slots + share of slots outside the top
+    """Catalog coverage of top-10 slots + share of slots outside the top
     popularity decile (provider-side exposure)."""
     stacked = np.concatenate(all_top10)
     top_decile_cut = np.quantile(popularity[popularity > 0], 0.9) if (popularity > 0).any() else 0

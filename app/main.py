@@ -1,8 +1,8 @@
 """FastAPI serving app (capstone Step 8: local deployment).
 
-Serves the final Step 4 pipeline — routed hybrid/popularity candidates
-re-ranked by the tuned XGBoost — with cold-start handling built into the
-router. Artefacts are rebuilt from the committed data and configs at startup
+Serves the final Step 4 pipeline - routed hybrid/popularity candidates
+re-ranked by the tuned XGBoost - with cold-start handling built into the
+router. Artifacts are rebuilt from the committed data and configs at startup
 (a few seconds; GET /health reports readiness). Run with:
 
     uvicorn app.main:app --port 8000
@@ -105,7 +105,7 @@ async function go() {
   document.getElementById('route').textContent = 'route: ' + data.route;
   const rows = data.items.map((it, i) =>
     `<tr><td>${i + 1}</td><td>${it.product_id.slice(0, 12)}…</td>` +
-    `<td>${it.category}</td><td>${it.price_brl ?? '—'}</td>` +
+    `<td>${it.category}</td><td>${it.price_brl ?? ' - '}</td>` +
     `<td>${it.score}</td></tr>` +
     (it.explanation
       ? `<tr class="why"><td></td><td colspan="4">${it.explanation}</td></tr>` : '')

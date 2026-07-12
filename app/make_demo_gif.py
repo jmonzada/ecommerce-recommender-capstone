@@ -1,7 +1,7 @@
 """Generate docs/media/demo.gif from live API responses (capstone Step 8).
 
 Drives the FastAPI app in-process (TestClient), captures /health and two
-/recommend calls (a repeat buyer -> personalised route; an unknown visitor ->
+/recommend calls (a repeat buyer -> personalized route; an unknown visitor ->
 cold-start route), and renders the actual JSON into GIF frames. Reproducible
 demo media: every number shown comes from a real request.
 
@@ -60,7 +60,7 @@ def response_lines(body):
 def main():
     from app.main import app
 
-    # a real repeat buyer makes the personalised route visible in the demo
+    # a real repeat buyer makes the personalized route visible in the demo
     delivered, _ = load_clean_orders()
     counts = delivered.groupby("customer_unique_id")["order_id"].nunique()
     repeat_id = counts[counts >= 2].index[0]

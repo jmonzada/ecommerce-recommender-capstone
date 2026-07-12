@@ -1,4 +1,4 @@
-"""Tests for src/features.py — window discipline, cleaning rules, pair features."""
+"""Tests for src/features.py - window discipline, cleaning rules, pair features."""
 
 import numpy as np
 import pandas as pd

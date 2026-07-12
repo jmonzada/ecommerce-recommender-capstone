@@ -15,7 +15,7 @@ shap==0.51.0
 lime==0.2.0.1
 fairlearn==0.14.0
 
-# Visualisation
+# Visualization
 matplotlib==3.11.0
 seaborn==0.13.2
 umap-learn==0.5.12

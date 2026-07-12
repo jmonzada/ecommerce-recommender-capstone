@@ -6,7 +6,7 @@ aggregating, so training and holdout pairs alike are scored only with
 information available at the feature-window cutoff. `assert_max_ts` is the
 audit hook the notebooks use to prove no input postdates its cutoff.
 
-Cleaning rules (each returns per-rule drop/impute counts — no silent cleaning):
+Cleaning rules (each returns per-rule drop/impute counts - no silent cleaning):
 - orders: keep `delivered` only; parse timestamps; attach customer_unique_id
 - reviews: keep the latest review per order (review_id is not unique)
 - order_items: collapse unit rows to one line per (order, product, seller)
@@ -139,7 +139,7 @@ def interactions(delivered: pd.DataFrame, items: pd.DataFrame, start, end) -> pd
 
 def customer_features(delivered, items, payments, reviews, products, window) -> pd.DataFrame:
     """Per customer_unique_id, from feature-window purchases only: RFM, spend
-    profile, review behaviour, preferred category, geography."""
+    profile, review behavior, preferred category, geography."""
     start, end = window
     inter = interactions(delivered, items, start, end)
     inter = inter.merge(products[["product_id", "category"]], on="product_id", how="left")
@@ -248,7 +248,7 @@ def load_centroids() -> pd.DataFrame:
 def customer_geo() -> pd.DataFrame:
     """Static geography per customer_unique_id (modal zip/state across their
     order-customer rows). An address is known at serving time, so unlike the
-    behavioural aggregates this is NOT window-filtered - cold customers keep
+    behavioral aggregates this is NOT window-filtered - cold customers keep
     their geography."""
     cust = load_table("customers")
     modal = (
@@ -293,7 +293,7 @@ def pair_features(pairs, cust_f, cust_geo_f, prod_f, seller_f, centroids, fill_s
     """Feature matrix for (customer_unique_id, product_id) pairs.
 
     Cold customers (no feature-window history) get has_history=0 with neutral
-    fills for behavioural features; that is the serving-time reality for ~97%
+    fills for behavioral features; that is the serving-time reality for ~97%
     of Olist customers and is reported, not hidden. Geography comes from the
     static customer_geo lookup, so distance/state features survive cold-start.
     Distance is customer zip centroid -> the product's main feature-window

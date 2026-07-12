@@ -1,6 +1,6 @@
 """Shared serving-pipeline assembly (used by notebook 04 and the app).
 
-Rebuilds the feature-window artefacts, candidate lists, and ranker feature
+Rebuilds the feature-window artifacts, candidate lists, and ranker feature
 matrices exactly as notebook 03 trained them (same seeds, same windows, same
 config), so the audit and the API score the same pipeline the evaluation
 chose.
@@ -38,7 +38,7 @@ from src.recommend import Router, regional_popularity
 
 
 def build_artifacts() -> dict:
-    """Feature-window artefacts + feature tables, per models/chosen_config.yaml."""
+    """Feature-window artifacts + feature tables, per models/chosen_config.yaml."""
     chosen = yaml.safe_load((REPO_ROOT / "models" / "chosen_config.yaml").read_text())
     windows = load_windows()
     fw = windows["feature_window"]

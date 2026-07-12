@@ -52,7 +52,7 @@ def group_metric_table(y, scores, groups, tau) -> pd.DataFrame:
 
 
 def exposure_gini(exposure_counts: np.ndarray) -> float:
-    """Gini coefficient of recommendation exposure across the catalogue
+    """Gini coefficient of recommendation exposure across the catalog
     (zeros included - unexposed products are part of the inequality)."""
     x = np.sort(np.asarray(exposure_counts, dtype=float))
     if x.sum() == 0:

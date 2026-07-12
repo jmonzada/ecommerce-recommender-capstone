@@ -4,7 +4,7 @@
 #   - post-August-2018 tail excluded (volume collapses: Sep 16 orders, Oct 4)
 # Rules: ALL aggregate features and similarity matrices are computed from the
 # feature window only, for training AND holdout pairs alike. Stage-1 evaluation
-# artefacts exclude every held-out order. Ranker CV groups by customer_unique_id.
+# artifacts exclude every held-out order. Ranker CV groups by customer_unique_id.
 data_start: "2017-01-01"
 data_end: "2018-08-31"
 feature_window:

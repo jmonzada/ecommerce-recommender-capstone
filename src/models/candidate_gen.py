@@ -6,7 +6,7 @@ leave-last-order-out artifacts for the candidate-generator comparison, and
 feature-window-only artifacts for ranker features and the end-to-end holdout
 evaluation.
 
-Scoring is batched: nothing here ever materialises a dense users x items
+Scoring is batched: nothing here ever materializes a dense users x items
 matrix (~25 GB for Olist) - per-user score vectors only.
 """
 
@@ -23,7 +23,7 @@ class InteractionMatrix:
     """Binary customer x product matrix with stable id/index mappings.
 
     Built from deduped (customer_unique_id, product_id) pairs; the product axis
-    covers the FULL catalogue (passed explicitly) so item indices are shared
+    covers the FULL catalog (passed explicitly) so item indices are shared
     across models fitted on different interaction sets.
     """
 
@@ -65,7 +65,7 @@ class ItemItemCF:
     similarities to the user's training items."""
 
     def fit(self, im: InteractionMatrix):
-        xn = normalize(im.X, axis=0)  # column-normalise -> item-item cosine
+        xn = normalize(im.X, axis=0)  # column-normalize -> item-item cosine
         s = (xn.T @ xn).tocsr()
         s.setdiag(0.0)
         s.eliminate_zeros()
@@ -93,7 +93,7 @@ class ItemItemCF:
 
 class ContentBased:
     """Cosine similarity in product CONTENT space: category one-hot plus the
-    standardised static attributes. Deliberately excludes interaction-derived
+    standardized static attributes. Deliberately excludes interaction-derived
     features (price, review means) so the model is window-independent and
     reaches products with zero sales history - that cold-start reach is its
     role in the lineup."""
@@ -140,7 +140,7 @@ class SVDRecommender:
 
 
 class HybridRecommender:
-    """Per-user z-normalised blend: w * item-item CF + (1 - w) * content."""
+    """Per-user z-normalized blend: w * item-item CF + (1 - w) * content."""
 
     def __init__(self, cf: ItemItemCF, content: ContentBased, w: float = 0.5):
         self.cf, self.content, self.w = cf, content, w

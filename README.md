@@ -11,9 +11,9 @@ Olist connects small Brazilian sellers to large storefronts. Roughly 97% of its 
 The task is recommendation, split into two stages:
 
 1. Candidate generation: popularity baseline, item-item collaborative filtering, content-based similarity, truncated-SVD matrix factorization, and a hybrid blend.
-2. Conversion ranking: a supervised classifier (Logistic Regression, Random Forest, or XGBoost) that scores candidate (customer, product) pairs using engineered behavioural, product, and pair features.
+2. Conversion ranking: a supervised classifier (Logistic Regression, Random Forest, or XGBoost) that scores candidate (customer, product) pairs using engineered behavioral, product, and pair features.
 
-Technical metrics: HitRate@10, NDCG@10, and catalogue coverage for stage 1; ROC-AUC, PR-AUC, and F1 for stage 2. On fairness, the project measures recommendation-quality parity across Brazilian regions, seller-exposure equity, and popularity bias, then tests a mitigation re-ranker and reports the fairness/accuracy trade-off it buys.
+Technical metrics: HitRate@10, NDCG@10, and catalog coverage for stage 1; ROC-AUC, PR-AUC, and F1 for stage 2. On fairness, the project measures recommendation-quality parity across Brazilian regions, seller-exposure equity, and popularity bias, then tests a mitigation re-ranker and reports the fairness/accuracy trade-off it buys.
 
 ## Results
 
@@ -43,7 +43,7 @@ uvicorn app.main:app --port 8000    # then open http://localhost:8000/
 
 ## Presentations
 
-Two decks summarise the project (Step 6). The technical deck (for peers) ships in two formats: [`technical_deck.pptx`](presentations/technical_deck.pptx) (editable PowerPoint) and [`technical_deck.pdf`](presentations/technical_deck.pdf) (portable). The [business deck](presentations/business_deck.pptx) is for a non-technical audience. Regenerate the editable decks with:
+Two decks summarize the project (Step 6). The technical deck (for peers) ships in two formats: [`technical_deck.pptx`](presentations/technical_deck.pptx) (editable PowerPoint) and [`technical_deck.pdf`](presentations/technical_deck.pdf) (portable). The [business deck](presentations/business_deck.pptx) is for a non-technical audience. Regenerate the editable decks with:
 
 ```bash
 python presentations/build_technical_deck.py     # technical_deck.pptx
@@ -54,12 +54,12 @@ python presentations/build_business_deck.py       # business_deck.pptx
 
 ```
 configs/          # YAML experiment configs
-data/raw/         # Olist source CSVs (see data/README.md for licence + download)
-data/processed/   # derived artefacts (regenerated; committed: zip-prefix centroid lookup)
+data/raw/         # Olist source CSVs (see data/README.md for license + download)
+data/processed/   # derived artifacts (regenerated; committed: zip-prefix centroid lookup)
 docs/             # data dictionary, deployment guide, LLM prompts & outputs (docs/llm/), demo media
 notebooks/        # 01 data overview, 02 EDA & features, 03 modeling, 04 explainability & fairness, 05 technical slides
 src/              # reusable pipeline code (data, features, models, evaluation, fairness, recommend)
-models/           # saved model artefacts + per-run metrics
+models/           # saved model artifacts + per-run metrics
 reports/          # final report + figures
 presentations/    # technical + business slide decks
 app/              # FastAPI recommendation service + demo page
@@ -83,6 +83,6 @@ uvicorn app.main:app --reload
 
 I used generative AI (Anthropic's Claude) in this project two ways: as a development assistant for code scaffolding, review, and documentation drafting, and as a project feature (the LLM-generated recommendation explanations and the LLM-drafted data dictionary, both documented in the final report's *Use of Generative AI* section, with prompts, raw outputs, and generated examples committed under `docs/llm/`). I verified every analysis decision, result, and piece of final content, and I own all of it.
 
-## Licence
+## License
 
 Code: MIT (see `LICENSE`). Data: Olist dataset, CC BY-NC-SA 4.0 (see `data/README.md`).

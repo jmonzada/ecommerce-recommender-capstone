@@ -1,4 +1,4 @@
-"""Tests for src/data.py — raw table access and the committed centroid lookup."""
+"""Tests for src/data.py - raw table access and the committed centroid lookup."""
 
 import pandas as pd
 

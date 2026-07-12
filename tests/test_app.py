@@ -1,4 +1,4 @@
-"""API smoke tests (capstone Step 8). One artefact build per session."""
+"""API smoke tests (capstone Step 8). One artifact build per session."""
 
 import pytest
 from fastapi.testclient import TestClient
@@ -10,7 +10,7 @@ from src.data import load_table
 def client():
     from app.main import app
 
-    with TestClient(app) as c:  # context manager runs the lifespan (artefact build)
+    with TestClient(app) as c:  # context manager runs the lifespan (artifact build)
         yield c
 
 

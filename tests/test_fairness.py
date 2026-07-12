@@ -1,4 +1,4 @@
-"""Tests for src/fairness.py — group table semantics, suppression, exposure."""
+"""Tests for src/fairness.py - group table semantics, suppression, exposure."""
 
 import numpy as np
 import pandas as pd

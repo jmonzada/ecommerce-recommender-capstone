@@ -139,7 +139,7 @@ add_big_stat(s, "0.02%", "of recommendation slots reach\nsmall sellers without i
 add_bullets(s, [
     "Customer acquisition spend buys, on average, exactly one order.",
     "Olist sells small merchants on exposure. A bestseller-only storefront quietly breaks that promise.",
-    "Today there is no personalisation: every visitor sees the same popular products.",
+    "Today there is no personalization: every visitor sees the same popular products.",
 ], top=4.5)
 
 # ---------------------------------------------------------------- 3 opportunity
@@ -148,10 +148,10 @@ add_big_stat(s, "960", "additional returning customers\nper +1pp repeat-purchase
 add_big_stat(s, "≈ R$130k", "in orders that +1pp represents,\nat the observed R$137\naverage order value", 7.0)
 add_bullets(s, [
     "Returning customers arrive with history, so they're exactly the ones a recommender can serve well.",
-    "For the single-purchase majority, the win is smarter first-purchase cross-sell and regional merchandising, not personalisation.",
+    "For the single-purchase majority, the win is smarter first-purchase cross-sell and regional merchandising, not personalization.",
     "For sellers: measurable exposure for rarely-shown products protects the marketplace's supply side.",
 ], top=4.5)
-add_note(s, "Scope honesty: personalisation applies to the ~3% with history today; the engine handles everyone, but with different tools.")
+add_note(s, "Scope honesty: personalization applies to the ~3% with history today; the engine handles everyone, but with different tools.")
 
 # ---------------------------------------------------------------- 4 what it does
 s = add_slide("What the engine does (no math required)", kicker="The product")
@@ -168,9 +168,9 @@ add_chevrons(s, ["Your history", "Shortlist (hundreds)", "Ranked top-10", "Plain
 s = add_slide("What the evaluation says, honestly", kicker="Results")
 add_big_stat(s, "1 in 5", "returning buyers get their next\npurchase in the top-10 shortlist,\nvs 1 in 32 with bestsellers", 0.9, width=4.1)
 add_big_stat(s, "+20%", "full pipeline over the shortlist\nalone, on a strictly past-only\nholdout (statistically real)", 5.0, width=4.0)
-add_big_stat(s, "37%", "of the catalogue reachable in\nreturning buyers' shortlists;\na bestseller feed shows 10 products", 8.9, width=4.0)
+add_big_stat(s, "37%", "of the catalog reachable in\nreturning buyers' shortlists;\na bestseller feed shows 10 products", 8.9, width=4.0)
 add_bullets(s, [
-    "Two test beds, labelled honestly: shortlist quality is graded on returning buyers' held-out orders; the deployed pipeline on a strictly past-only three-month holdout.",
+    "Two test beds, labeled honestly: shortlist quality is graded on returning buyers' held-out orders; the deployed pipeline on a strictly past-only three-month holdout.",
     "All numbers are offline estimates. The honest next step is a live A/B test, and the rollout plan is built around one.",
 ], top=4.7)
 add_note(s, "For the technical appendix: shortlist hit rate 0.203 vs 0.031 popularity (leave-last-order-out, 1,949 repeat buyers); "
@@ -180,7 +180,7 @@ add_note(s, "For the technical appendix: shortlist hit rate 0.203 vs 0.031 popul
 s = add_slide("We audited the bias before anyone asked", kicker="Fairness & brand risk")
 add_bullets(s, [
     "Recommendation quality is not uniform: Northeast customers currently get the best results. We found it, traced it to the shortlist stage, and monitor it.",
-    "Without intervention, small sellers (5.9% of the catalogue) receive 0.02% of top-10 slots, a direct risk to the exposure promise.",
+    "Without intervention, small sellers (5.9% of the catalog) receive 0.02% of top-10 slots, a direct risk to the exposure promise.",
     "We built a dial, and measured both sides of it:",
     "  Keep all 10 slots for relevance: best hit rate, near-zero small-seller exposure",
     "  Reserve 3 of 10 slots for under-exposed products: small sellers ×4.3, rarely-shown products ×2.1, at ~15% hit-rate cost",
@@ -216,7 +216,7 @@ add_bullets(s, [
     "Risks:",
     "  Offline results may not transfer online, which is why phase 1 is shadow mode.",
     "  Recommenders amplify what they show, so popularity feedback loops are a risk; exposure metrics watch for this monthly.",
-    "  Personalisation reach is small today (~3%), and growing it depends on retention improving; the two compound.",
+    "  Personalization reach is small today (~3%), and growing it depends on retention improving; the two compound.",
     "The ask:",
     "  An A/B testing slot on the storefront and click/purchase telemetry for the live hit rate.",
     "  A product owner for the seller-exposure dial.",

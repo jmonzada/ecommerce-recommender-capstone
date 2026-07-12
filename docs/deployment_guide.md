@@ -7,7 +7,7 @@
 uvicorn app.main:app --port 8000
 ```
 
-Startup rebuilds the serving artefacts from the committed data and
+Startup rebuilds the serving artifacts from the committed data and
 `models/chosen_config.yaml` (a few seconds). Then:
 
 - `GET /` - interactive demo page (paste a `customer_unique_id`, get top-10)
@@ -33,7 +33,7 @@ docker build -t olist-recommender .
 docker run -p 8000:8000 olist-recommender
 ```
 
-The image bakes in the raw data, configs, and trained artefacts, so a container
+The image bakes in the raw data, configs, and trained artifacts, so a container
 serves identically to the local run - no external services needed. The
 explanation cache is baked in too, so `explain=true` works offline; the
 `anthropic` SDK and API key are deliberately NOT in the image (no secrets in
@@ -70,20 +70,20 @@ Signals to watch in production, in order of alarm value:
 
 ## Versioning & rollback
 
-- Model artefacts (`models/*.joblib`, `*.npy`, `*.npz`, `chosen_config.yaml`)
+- Model artifacts (`models/*.joblib`, `*.npy`, `*.npz`, `chosen_config.yaml`)
   are committed alongside the code that produced them, so **every git tag is a
   deployable snapshot**. Tag releases (`v0.1.0`, ...) after each retraining.
 - Rollback = redeploy the previous tag (`git checkout <tag>` + `docker build`,
   or re-pull the previous image). No database migrations exist; rollback is
   side-effect free.
 - Retraining runs re-execute notebook 03 (seeded), which refreshes the
-  artefacts and MLflow records; the paired-CI evaluation in that notebook is
+  artifacts and MLflow records; the paired-CI evaluation in that notebook is
   the promotion gate - a new model ships only if the end-to-end paired
   difference vs the incumbent is positive.
 
 ## Known limitations
 
-- Single-process, in-memory artefacts; horizontal scaling would move artefact
+- Single-process, in-memory artifacts; horizontal scaling would move artifact
   loading behind a shared store.
 - The reserved-slot exploration mitigation from Step 5 is NOT enabled in the
   serving path - it requires fresh-window validation first (see the report).

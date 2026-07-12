@@ -10,20 +10,20 @@ uvicorn app.main:app --port 8000
 Startup rebuilds the serving artefacts from the committed data and
 `models/chosen_config.yaml` (a few seconds). Then:
 
-- `GET /` — interactive demo page (paste a `customer_unique_id`, get top-10)
-- `GET /health` — readiness probe (`artifacts_loaded: true` once serving)
-- `GET /recommend/{customer_unique_id}?k=10` — the two-stage pipeline; unknown
+- `GET /` - interactive demo page (paste a `customer_unique_id`, get top-10)
+- `GET /health` - readiness probe (`artifacts_loaded: true` once serving)
+- `GET /recommend/{customer_unique_id}?k=10` - the two-stage pipeline; unknown
   customers get the cold-start route automatically (`route` names which path
   served the request: `two_stage` / `regional_popularity` / `global_popularity`)
-- `GET /recommend/{customer_unique_id}?k=10&explain=true` — adds LLM-generated
+- `GET /recommend/{customer_unique_id}?k=10&explain=true` - adds LLM-generated
   "why you're seeing this" blurbs to the top 3 items (Step 9). Cache-first from
   the committed `models/explanations_cache.json`; a live Claude call happens
   only for uncached pairs when `ANTHROPIC_API_KEY` is set (`.env`, never
   committed) and the `anthropic` package is installed. Without either, uncached
-  items return `explanation: null` — an LLM outage can never fail a
+  items return `explanation: null` - an LLM outage can never fail a
   recommendation request.
 
-Demo: ![demo](media/demo.gif) — combined video incl. the explain flow:
+Demo: ![demo](media/demo.gif) - combined video incl. the explain flow:
 [`media/demo.mp4`](media/demo.mp4)
 
 ## Docker
@@ -34,10 +34,10 @@ docker run -p 8000:8000 olist-recommender
 ```
 
 The image bakes in the raw data, configs, and trained artefacts, so a container
-serves identically to the local run — no external services needed. The
+serves identically to the local run - no external services needed. The
 explanation cache is baked in too, so `explain=true` works offline; the
 `anthropic` SDK and API key are deliberately NOT in the image (no secrets in
-images) — pass `-e ANTHROPIC_API_KEY=...` and extend the image with
+images) - pass `-e ANTHROPIC_API_KEY=...` and extend the image with
 `pip install anthropic` only if live generation is wanted in a container.
 
 ## Reproducibility & experiment tracking
@@ -54,19 +54,19 @@ images) — pass `-e ANTHROPIC_API_KEY=...` and extend the image with
 
 Signals to watch in production, in order of alarm value:
 
-1. **Routing-share drift** — the share of requests served by each route
+1. **Routing-share drift** - the share of requests served by each route
    (`two_stage` vs `regional_popularity` vs `global_popularity`). A shift
    means the customer mix changed; the 98.5% cold share is the baseline.
-2. **Score distribution drift** — weekly PSI on the ranker's score histogram
+2. **Score distribution drift** - weekly PSI on the ranker's score histogram
    per route. Drift indicates the feature pipeline or demand changed.
-3. **Online hit-rate telemetry** — clicks/purchases on recommended items vs
+3. **Online hit-rate telemetry** - clicks/purchases on recommended items vs
    the offline HitRate@10 baselines (0.0146 overall, per-region values in
    `models/fairness_metrics.json`). This is where the offline proxies get
    validated or falsified.
-4. **Exposure metrics** — recompute the exposure Gini and small-seller share
+4. **Exposure metrics** - recompute the exposure Gini and small-seller share
    monthly (the fairness audit's provider-side numbers are the baseline);
    popularity feedback loops show up here first.
-5. **Operational** — p95 latency of `/recommend` and error rate of 5xx.
+5. **Operational** - p95 latency of `/recommend` and error rate of 5xx.
 
 ## Versioning & rollback
 
@@ -78,7 +78,7 @@ Signals to watch in production, in order of alarm value:
   side-effect free.
 - Retraining runs re-execute notebook 03 (seeded), which refreshes the
   artefacts and MLflow records; the paired-CI evaluation in that notebook is
-  the promotion gate — a new model ships only if the end-to-end paired
+  the promotion gate - a new model ships only if the end-to-end paired
   difference vs the incumbent is positive.
 
 ## Known limitations
@@ -86,4 +86,4 @@ Signals to watch in production, in order of alarm value:
 - Single-process, in-memory artefacts; horizontal scaling would move artefact
   loading behind a shared store.
 - The reserved-slot exploration mitigation from Step 5 is NOT enabled in the
-  serving path — it requires fresh-window validation first (see the report).
+  serving path - it requires fresh-window validation first (see the report).

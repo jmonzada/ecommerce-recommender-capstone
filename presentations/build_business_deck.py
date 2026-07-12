@@ -1,9 +1,10 @@
 """Build presentations/business_deck.pptx - the Step 6 executive deck.
 
+Same structure and identical numbers as presentations/build_business_deck.py,
+but the slide text is de-AI'd and carries zero em dashes, en dashes, or arrow
+glyphs (sub-bullets use a white-bullet marker; ranges are written with "to").
 Plain-English narrative for a non-technical audience; every number is
-transcribed from models/metrics.json, models/fairness_metrics.json, or the
-profiling notebook, and the offline-proxy caveat is stated on the slide that
-carries the results. Regenerate with:
+transcribed from the metrics/fairness JSON. Dash-free by design. Regenerate:
 
     python presentations/build_business_deck.py
 """
@@ -13,6 +14,9 @@ from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.util import Inches, Pt
+
+FIG = "reports/figures/04_lorenz.png"
+OUT = "presentations/business_deck.pptx"
 
 NAVY = RGBColor(0x14, 0x22, 0x3C)
 BLUE = RGBColor(0x1F, 0x6F, 0xC4)
@@ -53,7 +57,7 @@ def add_bullets(slide, items, top=2.0, left=0.7, width=11.9, size=18):
         text = item
         if item.startswith("  "):
             indent, text = 1, item.strip()
-        p.text = ("• " if indent == 0 else "– ") + text
+        p.text = ("• " if indent == 0 else "◦ ") + text  # bullet / white-bullet, no dashes
         p.level = indent
         p.font.size = Pt(size if indent == 0 else size - 2)
         p.font.color.rgb = NAVY if indent == 0 else GRAY
@@ -134,7 +138,7 @@ add_big_stat(s, "3.12%", "repeat-purchase rate\n(2,997 of 96,096 customers)", 4.
 add_big_stat(s, "0.02%", "of recommendation slots reach\nsmall sellers without intervention", 8.9)
 add_bullets(s, [
     "Customer acquisition spend buys, on average, exactly one order.",
-    "Olist's pitch to small merchants is exposure — a bestseller-only storefront quietly breaks that promise.",
+    "Olist sells small merchants on exposure. A bestseller-only storefront quietly breaks that promise.",
     "Today there is no personalisation: every visitor sees the same popular products.",
 ], top=4.5)
 
@@ -143,54 +147,53 @@ s = add_slide("Small movements in retention are worth real orders", kicker="The 
 add_big_stat(s, "960", "additional returning customers\nper +1pp repeat-purchase rate\n(arithmetic, not a forecast)", 2.4)
 add_big_stat(s, "≈ R$130k", "in orders that +1pp represents,\nat the observed R$137\naverage order value", 7.0)
 add_bullets(s, [
-    "Returning customers arrive with history — they're exactly the ones a recommender can serve well.",
+    "Returning customers arrive with history, so they're exactly the ones a recommender can serve well.",
     "For the single-purchase majority, the win is smarter first-purchase cross-sell and regional merchandising, not personalisation.",
     "For sellers: measurable exposure for rarely-shown products protects the marketplace's supply side.",
 ], top=4.5)
 add_note(s, "Scope honesty: personalisation applies to the ~3% with history today; the engine handles everyone, but with different tools.")
 
 # ---------------------------------------------------------------- 4 what it does
-s = add_slide("What the engine does — no math required", kicker="The product")
+s = add_slide("What the engine does (no math required)", kicker="The product")
 add_bullets(s, [
-    "Step 1 — builds a shortlist: products similar to what you've bought, plus what shoppers like you buy.",
-    "Step 2 — ranks the shortlist: a model scores how likely you are to actually purchase each item.",
-    "Brand-new visitor? It falls back gracefully: bestsellers for your region, or overall.",
-    "Every recommendation can explain itself in one plain sentence — \"why you're seeing this\".",
-    "Runs as a small web service in a container — serving exactly the pipeline the evaluation graded.",
+    "Step 1 builds a shortlist: products similar to what you've bought, plus what shoppers like you buy.",
+    "Step 2 ranks the shortlist: a model scores how likely you are to buy each item.",
+    "For a brand-new visitor, it falls back gracefully: bestsellers for your region, or overall.",
+    "Every recommendation can explain itself in one plain sentence: \"why you're seeing this\".",
+    "Runs as a small web service in a container, serving exactly the pipeline the evaluation graded.",
 ])
 add_chevrons(s, ["Your history", "Shortlist (hundreds)", "Ranked top-10", "Plain-language why"])
 
 # ---------------------------------------------------------------- 5 results
-s = add_slide("What the evaluation says — honestly", kicker="Results")
-add_big_stat(s, "1 in 5", "returning buyers get their next\npurchase in the top-10 shortlist\n— vs 1 in 32 with bestsellers", 0.9, width=4.1)
+s = add_slide("What the evaluation says, honestly", kicker="Results")
+add_big_stat(s, "1 in 5", "returning buyers get their next\npurchase in the top-10 shortlist,\nvs 1 in 32 with bestsellers", 0.9, width=4.1)
 add_big_stat(s, "+20%", "full pipeline over the shortlist\nalone, on a strictly past-only\nholdout (statistically real)", 5.0, width=4.0)
-add_big_stat(s, "37%", "of the catalogue reachable in\nreturning buyers' shortlists —\na bestseller feed shows 10 products", 8.9, width=4.0)
+add_big_stat(s, "37%", "of the catalogue reachable in\nreturning buyers' shortlists;\na bestseller feed shows 10 products", 8.9, width=4.0)
 add_bullets(s, [
     "Two test beds, labelled honestly: shortlist quality is graded on returning buyers' held-out orders; the deployed pipeline on a strictly past-only three-month holdout.",
-    "All numbers are offline estimates — the honest next step is a live A/B test, and the rollout plan is built around one.",
+    "All numbers are offline estimates. The honest next step is a live A/B test, and the rollout plan is built around one.",
 ], top=4.7)
 add_note(s, "For the technical appendix: shortlist hit rate 0.203 vs 0.031 popularity (leave-last-order-out, 1,949 repeat buyers); "
-            "end-to-end +0.0024 [+0.0008, +0.0041] Hit@10 vs shortlist-only; shortlist coverage 0.371; live top-10 coverage 0.071 → 0.102 with the seller dial.")
+            "end-to-end +0.0024 [+0.0008, +0.0041] Hit@10 vs shortlist-only; shortlist coverage 0.371; live top-10 coverage 0.071 to 0.102 with the seller dial.")
 
 # ---------------------------------------------------------------- 6 fairness
 s = add_slide("We audited the bias before anyone asked", kicker="Fairness & brand risk")
 add_bullets(s, [
-    "Recommendation quality is not uniform: Northeast customers currently get the best results — found, explained (it starts in the shortlist stage), and monitored.",
-    "Without intervention, small sellers (5.9% of the catalogue) receive 0.02% of top-10 slots — a direct risk to the exposure promise.",
+    "Recommendation quality is not uniform: Northeast customers currently get the best results. We found it, traced it to the shortlist stage, and monitor it.",
+    "Without intervention, small sellers (5.9% of the catalogue) receive 0.02% of top-10 slots, a direct risk to the exposure promise.",
     "We built a dial, and measured both sides of it:",
-    "  Keep all 10 slots for relevance → best hit rate, near-zero small-seller exposure",
-    "  Reserve 3 of 10 slots for under-exposed products → small sellers ×4.3, rarely-shown products ×2.1, at ~15% hit-rate cost",
-    "  Southern customers pay the most for that dial — quantified, so the trade-off is a decision, not an accident",
+    "  Keep all 10 slots for relevance: best hit rate, near-zero small-seller exposure",
+    "  Reserve 3 of 10 slots for under-exposed products: small sellers ×4.3, rarely-shown products ×2.1, at ~15% hit-rate cost",
+    "  Southern customers pay the most for that dial, quantified, so the trade-off is a decision, not an accident",
 ], size=16, width=7.4)
-s.shapes.add_picture("reports/figures/04_lorenz.png", Inches(8.4), Inches(1.9),
-                     width=Inches(4.4))
+s.shapes.add_picture(FIG, Inches(8.4), Inches(1.9), width=Inches(4.4))
 add_note(s, "Where to set the dial is a business decision. Our recommendation: validate on newer data than we tuned on, then start conservative (1 reserved slot) and measure.")
 
 # ---------------------------------------------------------------- 7 trust
 s = add_slide("Built for trust from day one", kicker="Trust & governance")
 add_bullets(s, [
     "Explainable: every score decomposes into signals; customers see a plain-language reason.",
-    "No demographics used anywhere — geography is audited precisely because it proxies income.",
+    "No demographics used anywhere. Geography is audited precisely because it proxies income.",
     "Privacy: no customer identifiers leave our systems, including to the AI vendor that writes explanations.",
     "Monitored in production: customer-mix drift, score drift, live hit rate, and monthly seller-exposure checks.",
     "Reversible: every release is a tagged snapshot; rollback is redeploying the previous one.",
@@ -199,10 +202,10 @@ add_bullets(s, [
 # ---------------------------------------------------------------- 8 rollout
 s = add_slide("Rollout: prove it live before trusting it", kicker="Plan")
 add_bullets(s, [
-    "Phase 1 — shadow mode (2–4 weeks): serve recommendations silently, compare against actual purchases.",
-    "Phase 2 — A/B test on returning buyers: recommendation rail vs bestseller rail; primary metric = repeat-purchase rate.",
-    "Phase 3 — regional merchandising for new visitors, measured on first-purchase cross-sell.",
-    "Phase 4 — seller-exposure dial, set with the merchant team after validating on newer data.",
+    "Phase 1, shadow mode (2 to 4 weeks): serve recommendations silently and compare against actual purchases.",
+    "Phase 2, A/B test on returning buyers: recommendation rail vs bestseller rail; primary metric = repeat-purchase rate.",
+    "Phase 3, regional merchandising for new visitors, measured on first-purchase cross-sell.",
+    "Phase 4, seller-exposure dial, set with the merchant team after validating on newer data.",
     "Each phase has a kill switch; the offline numbers set expectations, the live numbers decide.",
 ])
 add_chevrons(s, ["1 · Shadow", "2 · A/B returning buyers", "3 · Regional merch", "4 · Exposure dial"])
@@ -211,14 +214,14 @@ add_chevrons(s, ["1 · Shadow", "2 · A/B returning buyers", "3 · Regional merc
 s = add_slide("Risks we're carrying, and what we need", kicker="Risks & the ask")
 add_bullets(s, [
     "Risks:",
-    "  Offline results may not transfer online — that's why phase 1 is shadow mode.",
-    "  Recommenders amplify what they show: popularity feedback loops — exposure metrics watch for this monthly.",
-    "  Personalisation reach is small today (~3%); growing it depends on retention improving — the two compound.",
+    "  Offline results may not transfer online, which is why phase 1 is shadow mode.",
+    "  Recommenders amplify what they show, so popularity feedback loops are a risk; exposure metrics watch for this monthly.",
+    "  Personalisation reach is small today (~3%), and growing it depends on retention improving; the two compound.",
     "The ask:",
     "  An A/B testing slot on the storefront and click/purchase telemetry for the live hit rate.",
     "  A product owner for the seller-exposure dial.",
     "  A decision review after phase 2 with the live numbers on the table.",
 ], size=16)
 
-prs.save("presentations/business_deck.pptx")
-print(f"wrote presentations/business_deck.pptx with {len(prs.slides._sldIdLst)} slides")
+prs.save(OUT)
+print(f"wrote {OUT} with {len(prs.slides._sldIdLst)} slides")

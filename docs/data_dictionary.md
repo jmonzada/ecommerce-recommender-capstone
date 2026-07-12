@@ -3,7 +3,7 @@
 > **Provenance:** drafted by an LLM (Claude, `claude-opus-4-8`) from schema profiles
 > computed directly from the raw CSVs, then human-verified against the data
 > (2026-07-06). The generation script is `src/llm_docs.py`; the exact prompt and the
-> unedited draft are preserved in `docs/llm/` — diff them against this file to see
+> unedited draft are preserved in `docs/llm/` - diff them against this file to see
 > the corrections. Verified corrections: `review_id` is **not** unique (the draft
 > claimed it was), plus the notes marked *(verified)* below.
 
@@ -34,7 +34,7 @@ The Olist dataset is a relational collection of anonymized records from a Brazil
 | Column | Type | Missing % | Description | Units / allowed values |
 |---|---|---|---|---|
 | order_id | object | 0.0 | Identifier of the order to which this item belongs, linking to the orders table. | Hash string |
-| order_item_id | int64 | 0.0 | Sequential number distinguishing each item line within a single order. | Integer 1–21 |
+| order_item_id | int64 | 0.0 | Sequential number distinguishing each item line within a single order. | Integer 1-21 |
 | product_id | object | 0.0 | Identifier of the purchased product, linking to the products table. | Hash string |
 | seller_id | object | 0.0 | Identifier of the seller fulfilling this item, linking to the sellers table. | Hash string |
 | shipping_limit_date | object | 0.0 | Deadline by which the seller must hand the item to the logistics partner. | Timestamp (YYYY-MM-DD HH:MM:SS) |
@@ -46,18 +46,18 @@ The Olist dataset is a relational collection of anonymized records from a Brazil
 | Column | Type | Missing % | Description | Units / allowed values |
 |---|---|---|---|---|
 | order_id | object | 0.0 | Identifier of the order being paid, linking to the orders table. | Hash string |
-| payment_sequential | int64 | 0.0 | Sequence number when an order is paid using multiple payment methods. | Integer 1–29 |
+| payment_sequential | int64 | 0.0 | Sequence number when an order is paid using multiple payment methods. | Integer 1-29 |
 | payment_type | object | 0.0 | Method used for this payment. | credit_card, boleto, voucher, debit_card, not_defined |
-| payment_installments | int64 | 0.0 | Number of installments chosen by the customer for this payment. | Integer 0–24 |
+| payment_installments | int64 | 0.0 | Number of installments chosen by the customer for this payment. | Integer 0-24 |
 | payment_value | float64 | 0.0 | Monetary amount of this payment record. | BRL |
 
 ## olist_order_reviews_dataset.csv
 
 | Column | Type | Missing % | Description | Units / allowed values |
 |---|---|---|---|---|
-| review_id | object | 0.0 | Identifier of the review submitted by the customer. **Not unique** *(verified: 789 review_id values appear more than once, 814 surplus duplicate rows, and 547 orders carry more than one review — deduplicate before joining)*. | Hash string |
+| review_id | object | 0.0 | Identifier of the review submitted by the customer. **Not unique** *(verified: 789 review_id values appear more than once, 814 surplus duplicate rows, and 547 orders carry more than one review - deduplicate before joining)*. | Hash string |
 | order_id | object | 0.0 | Identifier of the reviewed order, linking to the orders table. | Hash string |
-| review_score | int64 | 0.0 | Customer satisfaction rating for the order. | Integer 1–5 |
+| review_score | int64 | 0.0 | Customer satisfaction rating for the order. | Integer 1-5 |
 | review_comment_title | object | 88.3 | Optional free-text title of the customer's review, in Portuguese. | Free text |
 | review_comment_message | object | 58.7 | Optional free-text body of the customer's review, in Portuguese. | Free text |
 | review_creation_date | object | 0.0 | Date the review survey was sent to the customer. | Timestamp (YYYY-MM-DD HH:MM:SS) |
@@ -82,10 +82,10 @@ The Olist dataset is a relational collection of anonymized records from a Brazil
 |---|---|---|---|---|
 | product_id | object | 0.0 | Unique identifier of the product. | Hash string |
 | product_category_name | object | 1.9 | Product category label in Portuguese, joinable to the English translation table. | Portuguese category name |
-| product_name_lenght | float64 | 1.9 | Character count of the product name — column name misspelled in the source data *(sic)*. | Number of characters |
-| product_description_lenght | float64 | 1.9 | Character count of the product description — column name misspelled in the source data *(sic)*. | Number of characters |
+| product_name_lenght | float64 | 1.9 | Character count of the product name - column name misspelled in the source data *(sic)*. | Number of characters |
+| product_description_lenght | float64 | 1.9 | Character count of the product description - column name misspelled in the source data *(sic)*. | Number of characters |
 | product_photos_qty | float64 | 1.9 | Number of photos published for the product. | Count |
-| product_weight_g | float64 | 0.0 | Weight of the product *(verified: 2 products have null weight and dimensions — the 0.0% is rounding)*. | Grams |
+| product_weight_g | float64 | 0.0 | Weight of the product *(verified: 2 products have null weight and dimensions - the 0.0% is rounding)*. | Grams |
 | product_length_cm | float64 | 0.0 | Length of the product package. | cm |
 | product_height_cm | float64 | 0.0 | Height of the product package. | cm |
 | product_width_cm | float64 | 0.0 | Width of the product package. | cm |
@@ -108,4 +108,4 @@ The Olist dataset is a relational collection of anonymized records from a Brazil
 
 ---
 
-**Note:** All timestamp and date columns are recorded in local Brazilian time. The Type column shows raw pandas dtypes as loaded — timestamp columns therefore read `object`; they are semantically datetime and parsed with `pd.to_datetime` on load (see the semantic-type breakdown in `notebooks/01_data_overview.ipynb`).
+**Note:** All timestamp and date columns are recorded in local Brazilian time. The Type column shows raw pandas dtypes as loaded - timestamp columns therefore read `object`; they are semantically datetime and parsed with `pd.to_datetime` on load (see the semantic-type breakdown in `notebooks/01_data_overview.ipynb`).
